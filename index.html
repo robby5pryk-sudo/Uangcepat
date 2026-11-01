@@ -1,0 +1,986 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEMPO — Simulasi Dana</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --dark: #17221e;
+    --dark2: #24332d;
+    --lime: #c7f36b;
+    --cream: #f5f5ed;
+    --white: #ffffff;
+    --muted: #929c93;
+    --line: rgba(255,255,255,.12);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+}
+
+button, input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+}
+
+nav {
+    width: 100%;
+    padding: 23px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--dark);
+    color: white;
+}
+
+.logo {
+    font-family: 'Manrope', sans-serif;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+.logo span {
+    color: var(--lime);
+}
+
+.nav-links {
+    display: flex;
+    gap: 35px;
+}
+
+.nav-links a {
+    color: #aeb9b1;
+    text-decoration: none;
+    font-size: 13px;
+    transition: .2s;
+}
+
+.nav-links a:hover {
+    color: var(--lime);
+}
+
+.nav-btn {
+    padding: 12px 19px;
+    border-radius: 7px;
+    background: var(--lime);
+    color: var(--dark);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* HERO */
+
+.hero {
+    background: var(--dark);
+    color: white;
+    padding: 75px 7% 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 430px;
+    height: 430px;
+    border: 1px solid rgba(199,243,107,.13);
+    border-radius: 50%;
+    right: -120px;
+    top: 20px;
+    box-shadow: 0 0 0 50px rgba(199,243,107,.025),
+                0 0 0 100px rgba(199,243,107,.02);
+}
+
+.hero-content {
+    max-width: 700px;
+    position: relative;
+    z-index: 2;
+}
+
+.eyebrow {
+    color: var(--lime);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.eyebrow::before {
+    content: "";
+    width: 25px;
+    height: 2px;
+    background: var(--lime);
+}
+
+.hero h1 {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(42px, 7vw, 76px);
+    letter-spacing: -4px;
+    line-height: 1.08;
+    font-weight: 700;
+}
+
+.hero h1 span {
+    color: var(--lime);
+}
+
+.hero-desc {
+    color: #a6b2a9;
+    line-height: 1.8;
+    font-size: 14px;
+    max-width: 430px;
+    margin-top: 25px;
+}
+
+.hero-bottom {
+    margin-top: 40px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.primary-btn {
+    background: var(--lime);
+    color: var(--dark);
+    padding: 16px 23px;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 12px;
+    transition: .25s;
+}
+
+.primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(199,243,107,.15);
+}
+
+.secondary-btn {
+    background: transparent;
+    border: 1px solid #536158;
+    color: white;
+    padding: 16px 23px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+/* INFO STRIP */
+
+.info-strip {
+    padding: 22px 7%;
+    background: #e9ebdf;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.info-icon {
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    background: white;
+    display: grid;
+    place-items: center;
+}
+
+/* MAIN */
+
+.main {
+    padding: 90px 7%;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 38px;
+    gap: 20px;
+}
+
+.section-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 800;
+    color: #859080;
+    margin-bottom: 13px;
+}
+
+.section-header h2 {
+    font-family: 'Manrope';
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: -2px;
+}
+
+.section-header p {
+    font-size: 12px;
+    color: #859080;
+}
+
+/* CALCULATOR */
+
+.calculator {
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 15px 50px rgba(23,34,30,.05);
+}
+
+.calc-form {
+    padding: 42px;
+}
+
+.calc-title {
+    font-family: 'Manrope';
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.calc-subtitle {
+    color: #8a938a;
+    font-size: 12px;
+    margin-bottom: 35px;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+.form-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.form-label span {
+    color: #839080;
+    font-size: 11px;
+}
+
+.amount-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid #e4e8df;
+    padding: 15px;
+    border-radius: 7px;
+    gap: 10px;
+}
+
+.amount-box b {
+    font-size: 14px;
+    color: #899187;
+}
+
+.amount-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--dark);
+    background: transparent;
+}
+
+input[type=range] {
+    width: 100%;
+    accent-color: #769e36;
+    cursor: pointer;
+}
+
+.range-info {
+    display: flex;
+    justify-content: space-between;
+    color: #939b91;
+    font-size: 10px;
+    margin-top: 10px;
+}
+
+.tenor-options {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 9px;
+}
+
+.tenor {
+    padding: 13px 5px;
+    background: #f4f5ef;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #7d897b;
+    transition: .2s;
+}
+
+.tenor.active {
+    background: var(--dark);
+    color: var(--lime);
+}
+
+.calc-result {
+    background: var(--dark);
+    color: white;
+    padding: 42px;
+    position: relative;
+    overflow: hidden;
+}
+
+.calc-result::after {
+    content: "";
+    width: 220px;
+    height: 220px;
+    position: absolute;
+    border: 1px solid rgba(199,243,107,.15);
+    border-radius: 50%;
+    bottom: -100px;
+    right: -80px;
+}
+
+.result-tag {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: #a3b09f;
+    font-weight: 700;
+}
+
+.result-number {
+    font-family: 'Manrope';
+    font-size: clamp(30px, 4vw, 43px);
+    font-weight: 800;
+    color: var(--lime);
+    margin: 14px 0 7px;
+    letter-spacing: -2px;
+}
+
+.result-caption {
+    font-size: 11px;
+    color: #9ca99e;
+}
+
+.result-divider {
+    height: 1px;
+    background: var(--line);
+    margin: 35px 0;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 21px;
+}
+
+.result-row span:first-child {
+    color: #9da99f;
+}
+
+.result-row strong {
+    font-size: 13px;
+}
+
+.result-note {
+    font-size: 10px;
+    color: #a3afa5;
+    line-height: 1.7;
+    margin-top: 30px;
+}
+
+.result-btn {
+    width: 100%;
+    padding: 16px;
+    margin-top: 25px;
+    background: var(--lime);
+    color: var(--dark);
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 800;
+    position: relative;
+    z-index: 2;
+}
+
+/* FEATURES */
+
+.features {
+    padding: 65px 7% 90px;
+    background: #e9ebdf;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 17px;
+    margin-top: 35px;
+}
+
+.feature-card {
+    background: var(--cream);
+    padding: 30px;
+    border-radius: 9px;
+    transition: .25s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--dark);
+    color: var(--lime);
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    font-size: 19px;
+    margin-bottom: 30px;
+}
+
+.feature-card h3 {
+    font-family: 'Manrope';
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.feature-card p {
+    color: #879085;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 50px 7%;
+    background: var(--dark);
+    color: white;
+}
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.footer-desc {
+    max-width: 280px;
+    color: #8f9c92;
+    font-size: 11px;
+    line-height: 1.8;
+    margin-top: 14px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #9da99f;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--line);
+    margin-top: 40px;
+    padding-top: 20px;
+    color: #78867c;
+    font-size: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* MODAL */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(12,20,16,.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    background: var(--cream);
+    width: 100%;
+    max-width: 390px;
+    border-radius: 12px;
+    padding: 35px;
+    animation: appear .25s ease;
+}
+
+@keyframes appear {
+    from {opacity: 0; transform: translateY(15px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.modal-icon {
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.modal h3 {
+    font-family: 'Manrope';
+    font-size: 23px;
+    margin-bottom: 12px;
+}
+
+.modal p {
+    color: #778277;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.modal-close {
+    margin-top: 25px;
+    width: 100%;
+    background: var(--dark);
+    color: white;
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 800px) {
+    .nav-links {
+        display: none;
+    }
+
+    .hero {
+        padding-top: 65px;
+    }
+
+    .calculator {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header {
+        align-items: start;
+        flex-direction: column;
+    }
+}
+
+@media(max-width: 480px) {
+    nav {
+        padding: 18px 5%;
+    }
+
+    .hero, .main, .features, footer {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .hero h1 {
+        letter-spacing: -2.5px;
+    }
+
+    .calc-form, .calc-result {
+        padding: 27px 22px;
+    }
+
+    .info-strip {
+        padding: 20px 5%;
+    }
+
+    .footer-links {
+        gap: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">TEMPO<span>.</span></div>
+
+    <div class="nav-links">
+        <a href="#beranda">Beranda</a>
+        <a href="#simulasi">Simulasi</a>
+        <a href="#tentang">Tentang</a>
+    </div>
+
+    <button class="nav-btn" onclick="scrollToCalc()">
+        Mulai ↗
+    </button>
+</nav>
+
+<section class="hero" id="beranda">
+    <div class="hero-content">
+        <div class="eyebrow">FINANCIAL FREEDOM PLATFORM</div>
+
+        <h1>
+            Rencana lebih
+            <span>matang.</span><br>
+            Langkah lebih
+            terarah.
+        </h1>
+
+        <p class="hero-desc">
+            Kenali gambaran cicilan dan perencanaan dana
+            melalui simulasi sederhana. Semua perhitungan
+            tersedia secara transparan di satu tempat.
+        </p>
+
+        <div class="hero-bottom">
+            <button class="primary-btn" onclick="scrollToCalc()">
+                Coba Kalkulator ↗
+            </button>
+
+            <button class="secondary-btn" onclick="document.getElementById('tentang').scrollIntoView({behavior:'smooth'})">
+                Pelajari lebih lanjut
+            </button>
+        </div>
+    </div>
+</section>
+
+<div class="info-strip">
+    <div class="info-item">
+        <div class="info-icon">◈</div>
+        Simulasi transparan
+    </div>
+
+    <div class="info-item">
+        <div class="info-icon">⌁</div>
+        Perhitungan otomatis
+    </div>
+
+    <div class="info-item">
+        <div class="info-icon">◎</div>
+        Tanpa transaksi nyata
+    </div>
+</div>
+
+<main class="main" id="simulasi">
+
+    <div class="section-header">
+        <div>
+            <div class="section-label">01 / LOAN CALCULATOR</div>
+            <h2>Hitung rencana<br>danamu.</h2>
+        </div>
+
+        <p>Atur nominal dan tenor untuk melihat<br>
+        perkiraan cicilan bulanan.</p>
+    </div>
+
+    <div class="calculator">
+
+        <div class="calc-form">
+            <div class="calc-title">Kalkulator simulasi</div>
+            <div class="calc-subtitle">
+                Sesuaikan angka dengan kebutuhan simulasi.
+            </div>
+
+            <div class="form-group">
+                <div class="form-label">
+                    Jumlah dana
+                    <span>Rupiah (IDR)</span>
+                </div>
+
+                <div class="amount-box">
+                    <b>Rp</b>
+                    <input type="number" id="amount"
+                    value="5000000" min="500000" max="50000000">
+                </div>
+
+                <input type="range" id="amountRange"
+                min="500000" max="50000000"
+                step="500000" value="5000000">
+
+                <div class="range-info">
+                    <span>Rp500 ribu</span>
+                    <span>Rp50 juta</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="form-label">
+                    Jangka waktu
+                    <span>Pilih tenor</span>
+                </div>
+
+                <div class="tenor-options">
+                    <button class="tenor active" data-month="3">3 Bulan</button>
+                    <button class="tenor" data-month="6">6 Bulan</button>
+                    <button class="tenor" data-month="9">9 Bulan</button>
+                    <button class="tenor" data-month="12">12 Bulan</button>
+                </div>
+            </div>
+
+            <p style="font-size:10px;color:#929a90;line-height:1.8">
+                Catatan: angka di atas merupakan parameter
+                ilustratif untuk keperluan demonstrasi.
+            </p>
+        </div>
+
+        <div class="calc-result">
+
+            <div class="result-tag">ESTIMASI CICILAN / BULAN</div>
+
+            <div class="result-number" id="monthly">
+                Rp1.741.667
+            </div>
+
+            <div class="result-caption">
+                Perkiraan pembayaran bulanan
+            </div>
+
+            <div class="result-divider"></div>
+
+            <div class="result-row">
+                <span>Jumlah dana</span>
+                <strong id="displayAmount">Rp5.000.000</strong>
+            </div>
+
+            <div class="result-row">
+                <span>Jangka waktu</span>
+                <strong id="displayTenor">3 Bulan</strong>
+            </div>
+
+            <div class="result-row">
+                <span>Biaya ilustratif</span>
+                <strong id="displayInterest">Rp225.000</strong>
+            </div>
+
+            <div class="result-row">
+                <span>Total simulasi</span>
+                <strong id="total">Rp5.225.0</strong>
+            </div>
+
+            <div class="result-note">
+                * Menggunakan asumsi biaya simulasi 1,5%
+                per bulan secara flat. Bukan penawaran
+                pinjaman atau persetujuan kredit.
+            </div>
+
+            <button class="result-btn" onclick="openModal()">
+                Lihat Hasil Simulasi ↗
+            </button>
+        </div>
+
+    </div>
+</main>
+
+<section class="features" id="tentang">
+
+    <div class="section-label">02 / WHY TEMPO</div>
+
+    <div class="section-header">
+        <div>
+            <h2>Lebih sederhana.<br>Lebih terukur.</h2>
+        </div>
+        <p>Informasi simulasi yang disusun<br>
+        dengan pendekatan sederhana.</p>
+    </div>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+            <div class="feature-icon">↗</div>
+            <h3>Hitung secara langsung</h3>
+            <p>
+                Perubahan nominal dan tenor akan
+                langsung memperbarui hasil perhitungan
+                tanpa perlu memuat ulang halaman.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">◈</div>
+            <h3>Informasi terstruktur</h3>
+            <p>
+                Lihat rincian dana, biaya ilustratif,
+                dan total simulasi dalam satu tampilan
+                yang mudah dipahami.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">◎</div>
+            <h3>Demo tanpa transaksi</h3>
+            <p>
+                Seluruh fitur dibuat untuk demonstrasi.
+                Tidak ada pencairan dana, pengajuan kredit,
+                atau transaksi keuangan sungguhan.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<footer>
+    <div class="footer-top">
+        <div>
+            <div class="logo">TEMPO<span>.</span></div>
+            <p class="footer-desc">
+                Platform demonstrasi simulasi finansial
+                dengan pengalaman yang sederhana,
+                transparan, dan mudah digunakan.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <a href="#beranda">Beranda</a>
+            <a href="#simulasi">Simulasi</a>
+            <a href="#tentang">Tentang</a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <span>© 2026 TEMPO. Demo Project.</span>
+        <span>BUKAN LAYANAN PINJAMAN SUNGGUHAN</span>
+    </div>
+</footer>
+
+<div class="modal-overlay" id="modal">
+    <div class="modal">
+        <div class="modal-icon">✳</div>
+
+        <h3>Simulasi berhasil dihitung.</h3>
+
+        <p>
+            Ini merupakan demonstrasi antarmuka TEMPO.
+            Hasil perhitungan tidak dapat digunakan
+            sebagai persetujuan pinjaman atau transaksi
+            keuangan sungguhan.
+        </p>
+
+        <button class="modal-close" onclick="closeModal()">
+            Kembali ke halaman
+        </button>
+    </div>
+</div>
+
+<script>
+const amount = document.getElementById('amount');
+const amountRange = document.getElementById('amountRange');
+
+const monthly = document.getElementById('monthly');
+const displayAmount = document.getElementById('displayAmount');
+const displayTenor = document.getElementById('displayTenor');
+const displayInterest = document.getElementById('displayInterest');
+const totalDisplay = document.getElementById('total');
+
+let tenor = 3;
+
+const formatRupiah = (value) => {
+    return 'Rp' + Math.round(value).toLocaleString('id-ID');
+};
+
+function calculate() {
+    let principal = Number(amount.value);
+
+    if (!Number.isFinite(principal)) principal = 500000;
+    principal = Math.max(500000, Math.min(50000000, principal));
+
+    amount.value = principal;
+    amountRange.value = principal;
+
+    // Asumsi biaya demonstrasi 1,5% per bulan
+    const interest = principal * 0.015 * tenor;
+    const total = principal + interest;
+    const installment = total / tenor;
+
+    monthly.textContent = formatRupiah(installment);
+    displayAmount.textContent = formatRupiah(principal);
+    displayTenor.textContent = tenor + ' Bulan';
+    displayInterest.textContent = formatRupiah(interest);
+    totalDisplay.textContent = formatRupiah(total);
+}
+
+amount.addEventListener('input', calculate);
+
+amountRange.addEventListener('input', () => {
+    amount.value = amountRange.value;
+    calculate();
+});
+
+document.querySelectorAll('.tenor').forEach(button => {
+    button.addEventListener('click', () => {
+        document.querySelectorAll('.tenor').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        button.classList.add('active');
+        tenor = Number(button.dataset.month);
+
+        calculate();
+    });
+});
+
+function scrollToCalc() {
+    document.getElementById('simulasi').scrollIntoView({
+        behavior: 'smooth'
+    });
+}
+
+function openModal() {
+    document.getElementById('modal').classList.add('show');
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('show');
+}
+
+document.getElementById('modal').addEventListener('click', e => {
+    if (e.target.id === 'modal') closeModal();
+});
+
+calculate();
+</script>
+
+</body>
+</html>
